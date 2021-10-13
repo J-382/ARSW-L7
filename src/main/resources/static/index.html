@@ -24,14 +24,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <style>
         *, *::after, *::before {
-            border: none;
-            padding: none;
             margin: 0px;
         }
     </style>
     
     <body> 
         <canvas id="canvas" width="800" height="600" style="border: 2px solid black"></canvas>
+        <div>
+            <input type="text" id="drawNumber" placeholder="Draw number"/>
+            <input type="button" value="Load!" id="load"/>
+        </div>
+        
     </body>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
