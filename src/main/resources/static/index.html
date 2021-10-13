@@ -22,24 +22,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
-
+    <style>
+        *, *::after, *::before {
+            border: none;
+            padding: none;
+            margin: 0px;
+        }
+    </style>
     
-    <body onload="app.init()">
-        X:<input id="x" type="number"/>
-        Y:<input id="y" type="number"/>        
-        <button id="send">Send point</button>
-        <canvas id="canvas" width="800" height="600"></canvas>
+    <body> 
+        <canvas id="canvas" width="800" height="600" style="border: 2px solid black"></canvas>
     </body>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded",()=>{
+        document.addEventListener("DOMContentLoaded", () => {
             app.init();
-            document.getElementById("send").addEventListener("click",() => {
-                app.publishPoint($('#x').val(),$('#y').val());
-            });
         });
     </script>
+        
 </html>

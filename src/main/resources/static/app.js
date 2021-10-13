@@ -21,10 +21,10 @@ var app = (function () {
     var getMousePosition = function (evt) {
         canvas = document.getElementById("canvas");
         var rect = canvas.getBoundingClientRect();
-        return {
-            x: evt.clientX - rect.left,
-            y: evt.clientY - rect.top
-        };
+        return new Point(
+            Math.round(evt.clientX - rect.left), 
+            Math.round(evt.clientY - rect.top)
+        );
     };
 
 
@@ -33,34 +33,31 @@ var app = (function () {
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
         
-        //subscribe to /topic/TOPICXX when connections succeed
+        //subscribe to /topic/newpoint when connections succeed
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newpoint', function (eventbody) {
                 var point = JSON.parse(eventbody.body);
-                alert(JSON.stringify(point));
+                addPointToCanvas(point);
             });
         });
-
     };
     
+    _publishMousePoint = function(event){
+        let point = getMousePosition(event);
+        console.info("publishing point at "+point);
+        stompClient.send("/topic/newpoint", {}, JSON.stringify(point));
+    }
     
 
     return {
 
         init: function () {
-            var can = document.getElementById("canvas");
+            let can = document.getElementById("canvas");
+            if(window.PointerEvent) can.addEventListener("pointerdown", _publishMousePoint);
+            else canvas.addEventListener("mousedown", () => _publishMousePoint);
             //websocket connection
-            connectAndSubscribe();
-        },
-
-        publishPoint: function(px,py){
-            var pt=new Point(px,py);
-            console.info("publishing point at "+pt);
-            stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
-            addPointToCanvas(pt);
-
-            //publicar el evento
+            connectAndSubscribe(); 
         },
 
         disconnect: function () {
