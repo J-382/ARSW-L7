@@ -20,11 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/webjars/jquery/jquery.min.js"></script>
-        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-        <script src="/app.js"></script>
-
     </head>
 
 
@@ -32,7 +27,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body onload="app.init()">
         X:<input id="x" type="number"/>
         Y:<input id="y" type="number"/>        
-        <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
+        <button id="send">Send point</button>
         <canvas id="canvas" width="800" height="600"></canvas>
     </body>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            app.init();
+            document.getElementById("send").addEventListener("click",() => {
+                app.publishPoint($('#x').val(),$('#y').val());
+            });
+        });
+    </script>
 </html>
