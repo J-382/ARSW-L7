@@ -34,14 +34,14 @@ public class CollabPaintWebSocketConfig extends AbstractWebSocketMessageBrokerCo
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");        
+        //config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/app");
+        //config.setApplicationDestinationPrefixes("/app");        
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stompendpoint").withSockJS();
-        
     }
     
 
